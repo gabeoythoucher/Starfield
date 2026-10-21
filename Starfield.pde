@@ -3,10 +3,10 @@ class Particle
   float rise,run;
   float X,Y;
   Particle(int s){
-    X=500;
-    Y=500;
-    rise = (float)(Math.random()*speedrange(s))-s;
-    run = (float)(Math.random()*speedrange(s))-s;
+    X=350;
+    Y=350;
+    rise = speedrange(s);
+    run = speedrange(s);
   }
   void splode(){
     X+=run;
@@ -31,27 +31,37 @@ Particle[] bob = new Particle[amount];
 
 void setup()
 {
-  size(1000,1000);
+  size(700,700);
   for(int i = 0;i<amount;i++){
     bob[i]= new Particle(spd);
   }
 }
 void draw()
 {
-  
   background(0);
   for(int i = 0;i<amount;i++){
     bob[i].splode();
     bob[i].show();
-    if(bob[i].X>1050 || bob[i].X<-50 || bob[i].Y>1050 || bob[i].Y<-50){
-      bob[i].X = 500;
-      bob[i].Y = 500;
-      bob[i].rise = (float)(Math.random()*21)-spd;
-      bob[i].run = (float)(Math.random()*21)-spd;
+    
+    // Reset individual particles if they fly off-screen
+    if(bob[i].X>750 || bob[i].X<-50 || bob[i].Y>750 || bob[i].Y<-50){
+      bob[i].X = 350;
+      bob[i].Y = 350;
+      bob[i].rise = speedrange(spd);
+      bob[i].run = speedrange(spd);
     }
   } 
   fill(0);
   stroke(0);
-  ellipse(500,500,10,10);
+  ellipse(350,350,25,25);
   //your code here
+}
+
+void mousePressed() {
+  for(int i = 0; i < amount; i++) {
+    bob[i].X = 350;
+    bob[i].Y = 350;
+    bob[i].rise = speedrange(spd);
+    bob[i].run = speedrange(spd);
+  }
 }
