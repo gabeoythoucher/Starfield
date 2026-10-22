@@ -13,8 +13,10 @@ class Particle
     Y+=rise;
   }
   void show(){
-    stroke(128,128,255);
-    line(X-run,Y-rise,X,Y);
+    strokeWeight(3);
+    stroke(100+4*(abs(rise)+abs(run)),100+4*(abs(rise)+abs(run)),255);
+    //stroke((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+    line(X+7*run,Y+7*rise,X,Y);
   }
 }
 class OddballParticle //inherits from Particle
@@ -22,10 +24,10 @@ class OddballParticle //inherits from Particle
   //your code here
 }//end of classes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 float speedrange(int s){
-  return (float)(Math.random()*(s*2+1)-s);
+  return (float)(Math.random()*(s*2)-s);
 }
 
-int amount = 1000;
+int amount = 500;
 int spd = 10;
 Particle[] bob = new Particle[amount];
 
@@ -52,8 +54,8 @@ void draw()
     }
   } 
   fill(0);
-  stroke(0);
-  ellipse(350,350,25,25);
+  noStroke();
+  ellipse(350,350,5,5);
   //your code here
 }
 
