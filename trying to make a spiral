@@ -1,0 +1,80 @@
+class Particle
+{  
+  float angle1;
+  float angle2;
+  float rise,run;
+  float X,Y,XE,YE;
+  Particle(int s){
+    X=width/2;
+    Y=height/2;
+    rise = speedrange(s);
+    run = speedrange(s);
+    angle1= atan(radians(rise/run));
+  }
+  void splode(){
+    angle1+=1;
+    X+=run;
+    Y+=rise;
+    XE=X+5*run-sqrt(X+Y)*(cos(radians(angle1)));
+    YE=Y+5*rise-sqrt(X+Y)*(sin(radians(angle1)));
+  }
+  void show(){
+    blendMode(SCREEN);
+    strokeWeight(3);
+    stroke(100+4*(abs(rise)+abs(run)),100+4*(abs(rise)+abs(run)),255);
+    //stroke((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+    line(X,Y,XE,YE);
+    stroke(100+7*(abs(rise)+abs(run)),100+7*(abs(rise)+abs(run)),255);
+    line(X+5*run,Y+5*rise,X+5*run,Y+5*rise);
+  }
+}
+class OddballParticle //inherits from Particle
+{
+  //your code here
+}//end of classes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+float speedrange(int s){
+  return (float)(Math.random()*(s*2)-s);
+}
+
+int amount = 10;
+int spd = 7;
+float w = 1;
+Particle[] bob = new Particle[amount];
+void setup()
+{
+  size(1200,700);
+  for(int i = 0;i<amount;i++){
+    bob[i]= new Particle(spd);
+  }
+}
+void draw()
+{
+  background(0);
+  for(int i = 0;i<amount;i++){
+    bob[i].rise*=1.03;
+    bob[i].run *=1.03;
+    bob[i].splode();
+    bob[i].show();
+    
+    // Reset individual particles if they fly off-screen
+    if(bob[i].X>width+spd || bob[i].X<-50 || bob[i].Y>height+spd || bob[i].Y<-50){
+      bob[i].X = width/2;
+      bob[i].Y = height/2;
+      bob[i].rise = speedrange(spd);
+      bob[i].run = speedrange(spd);
+    }
+  } 
+  w*=1.05;
+  if(w>sqrt(width*width+height*height)){
+    w=1;
+  }
+}
+
+void mousePressed() {
+  for(int i = 0; i < amount; i++) {
+    bob[i].X = width/2;
+    bob[i].Y = height/2;
+    bob[i].rise = speedrange(spd);
+    bob[i].run = speedrange(spd);
+  }
+}
