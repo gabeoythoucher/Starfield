@@ -10,22 +10,25 @@ class Particle
     rise = speedrange(s);
     run = speedrange(s);
     angle1= atan(radians(rise/run));
+    angle2 = atan(radians(X/Y));
   }
   void splode(){
     angle1+=1;
-    X+=run;
-    Y+=rise;
-    XE=X+5*run-sqrt(X+Y)*(cos(radians(angle1)));
-    YE=Y+5*rise-sqrt(X+Y)*(sin(radians(angle1)));
+    X+=run+ X*(cos(radians(angle1)));
+    Y+=rise+ Y*(sin(radians(angle1)));
+    XE=X+5*run*(cos(radians(angle1)));
+    YE=Y+5*rise*(sin(radians(angle1)));
   }
   void show(){
     blendMode(SCREEN);
     strokeWeight(3);
     stroke(100+4*(abs(rise)+abs(run)),100+4*(abs(rise)+abs(run)),255);
     //stroke((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
-    line(X,Y,XE,YE);
+    line(X,Y,XE,YE);//one that im working on
     stroke(100+7*(abs(rise)+abs(run)),100+7*(abs(rise)+abs(run)),255);
-    line(X+5*run,Y+5*rise,X+5*run,Y+5*rise);
+    //start and end points
+    line(X,Y,X,Y);
+    line(XE,YE,XE,YE);
   }
 }
 class OddballParticle //inherits from Particle
@@ -42,7 +45,7 @@ float w = 1;
 Particle[] bob = new Particle[amount];
 void setup()
 {
-  size(1200,700);
+  size(1200,1200);
   for(int i = 0;i<amount;i++){
     bob[i]= new Particle(spd);
   }
