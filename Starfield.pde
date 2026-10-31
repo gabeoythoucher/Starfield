@@ -41,10 +41,29 @@ class Particle
     //line(X,Y,X,Y);
   }
 }
-class OddballParticle //inherits from Particle
+
+// 1. ADDED: OddballParticle class extending Particle
+class OddballParticle extends Particle 
 {
-  //your code here
-}//end of classes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  OddballParticle(int s){
+    super(s); // Calls the Particle constructor to set X and Y to center
+    // Make it look separate by moving it at a fixed, distinct pace
+    rise = (float)(Math.random() * 4 - 2);
+    run = (float)(Math.random() * 4 - 2);
+  }
+  
+  void splode(){
+    X += run + (float)(Math.random() * 10 - 5);
+    Y += rise + (float)(Math.random() * 10 - 5);
+  }
+  
+  void show(){
+    blendMode(BLEND);
+    stroke(255, 0, 0); 
+    strokeWeight(3);
+    line(X, Y, X-run,Y-rise);
+  }
+}
 float speedrange(int s){
   return (float)(Math.random()*(s*2)-s);
 }
@@ -57,7 +76,8 @@ ring[] dave = new ring[3];
 void setup()
 {
   size(1200,700);
-  for(int i = 0;i<amount;i++){
+  bob[0]= new OddballParticle(spd);
+  for(int i = 1;i<amount;i++){
     bob[i]= new Particle(spd);
   }
   for(int i = 0;i<dave.length;i++){
